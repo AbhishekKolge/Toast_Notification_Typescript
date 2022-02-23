@@ -15,7 +15,7 @@ const ThirdComponent: React.FunctionComponent = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [disableBtn, setDisableBtn] = useState<boolean>(false);
   const [showCountries, setShowCountries] = useState<boolean>(false);
-  const [timer, setTimer] = useState<number>(ctxSecondary.timer);
+  const [timer, setTimer] = useState<number | null>(null);
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -46,10 +46,10 @@ const ThirdComponent: React.FunctionComponent = () => {
       return;
     }
     const countdown = setTimeout(() => {
-      setTimer((prevState) => prevState - 1);
+      setTimer((prevState) => prevState && prevState - 1);
     }, 1000);
 
-    ctx.changeToastTextHandler(timer.toString());
+    timer && ctx.changeToastTextHandler(timer.toString());
 
     if (timer === 0) {
       clearTimeout(countdown);
